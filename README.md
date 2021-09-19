@@ -5,4 +5,3 @@ The instantaneous angular velocity data is collected by Phyphox app which is the
 
 Overleaf link [here](https://www.overleaf.com/project/60e72e863797bcaf2338ebc0) act as the final report with complete background study, Theory associated and Results and conclusions.
 
-I will type in more info about the project I am still learning and ITS FUN.
