@@ -24,41 +24,40 @@ def RungKutta4(f,u0,t):
 
         u[k+1] =u[k]+du 
 
-
+    #return the increment of value with each step as an array     
     return u
-'''
-#Let d\omega/dt = D(u,t) where \omega= x,y,z =u = u[0],u[1],u[2]
-def D(u,t):
-	
-	#C1,C2,C3 are Constants here cause we analytically calculated the Inertia so we just declare here
+
+#formulating equations of rigid body in free rotation
+
+def D(u,t1):
+    
+    #C1,C2,C3 are Constants here cause we analytically calculated the Inertia so we just declare here
     C1 =-0.994379
     C2 =0.974025
     C3 =0.64741
     return np.array([C1*u[1]*u[2], C2*u[2]*u[0], C3*u[1]*u[0]])
+#as it is non iterable as an array to be processed in Rungekutta from output we have to copy it to the plot function for RK function to directly operate
 
-#initial Conditions
-t1 = np.linspace(0,0.4,1000)
-u0 = np.array([24,1,3])
+#function to calculate the Energy
+def energy(u):
+    
+    #inertia value analytically calculated for POCO M2 PRO
+    I1=479.838
+    I2=103.755
+    I3=580.896
+    #the u is here the result obtained from RK4 define it as a 1D array
+    E = np.array([0.5*(I1*u[:,0]**2+I2*u[:,1]**2+I3*u[:,2]**2)])
+    return E
 
-out = RungKutta4(D,u0,t1)
-plt.plot(t1,out[:,0],'b')
-plt.plot(t1,out[:,1],'g')
-plt.plot(t1,out[:,2],'r')
-plt.show()
-'''
+#function to calculate Angular momentum
+def ang_momentum(u):
+    #inertia value analytically calculated for POCO M2 PRO
+    I1=479.838
+    I2=103.755
+    I3=580.896
+
+    L= np.array([np.sqrt((I1*u[:,0])**2+(I2*u[:,1])**2+(I3*u[:,2])**2)])
+
+    return L
 
 
-'''
-def pend(y, t):
-    b= 1
-    c=2
-    return np.array([y[1], -b*y[1] - c*np.sin(y[0])])
-
-t5 = np.linspace(0,10,1000)
-
-y0 = np.array([np.pi-0.1,0.0])
-out2 = RungKutta4(pend,y0,t5)
-
-plt.plot(t5,out2[:,0])
-plt.show()
-'''
