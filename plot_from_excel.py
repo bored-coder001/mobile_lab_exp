@@ -32,6 +32,8 @@ def excel_plotter(excel_file,sheet,u0,t1):
 	plt.plot(t1,out[:,0],'palegreen',label = "theoretical omega_x")
 	plt.plot(t1,out[:,1],'cornflowerblue',label = "theoretical omega_y")
 	plt.plot(t1,out[:,2],'magenta',label = "theoretical omega_z")
+	plt.axvline(x=t1[0],color='k',linestyle='--')
+	plt.axvline(x=t1[-1],color='k',linestyle='--')
 
 	#plotting the defined data points from the meta data sheet
 	plt.plot(t, x, 'g--', label = 'omega_x' )
@@ -70,9 +72,19 @@ def excel_plotter2(excel_file,sheet,u0,t1):
 	#calling Energy calculator function to calculate Kinetic energy taking in the result of RK-4 integration of its raw data	
 	KE = energy(out2)
 	ANG_MOM=ang_momentum(out2)
+	
+
+	print(f'Theoretical Avg. of L for {excel_file} = {np.average(ANG_MOM)}')
+	print(f'Theoretical Avg of K for {excel_file}= {np.average(KE)}')
+	
+
+
+
 
 	plt.plot(t,L, 'g--',label='Angular Momentum')
-	plt.plot(t1,ANG_MOM.transpose(),'r',label='Theoretical L')
+	plt.plot(t1,ANG_MOM.transpose(),'r',label='Theoretical L ')
+	plt.axvline(x=t1[0],color='k',linestyle='--')
+	plt.axvline(x=t1[-1],color='k',linestyle='--')
 	
 	plt.legend(loc ='best')
 	plt.xlabel('Time (s)')
@@ -83,6 +95,8 @@ def excel_plotter2(excel_file,sheet,u0,t1):
 	plt.plot(t,K, 'b--',label='Kinetic Energy')
 	#as the solution obtained from the energy function is 1-D row it is not favourable for plotting with t in x-axis we use transpose to convert it into column vector
 	plt.plot(t1,KE.transpose(),'r',label='Theoretical KE')
+	plt.axvline(x=t1[0],color='k',linestyle='--')
+	plt.axvline(x=t1[-1],color='k',linestyle='--')
 	plt.legend(loc ='best')
 	plt.xlabel('Time (s)')
 	plt.ylabel('Kinetic Energy (\mu J)')
